@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: notion-code-exec
+
+docker:
+  image: "python-container"
