@@ -15,8 +15,10 @@ class ParagraphExecutionController(
 ) {
 
     @GetMapping("/execute")
-    fun executeParagraph(@RequestParam code: String): Mono<ResponseEntity<String>> {
-        return paragraphExecutionService.executeParagraph(code)
+    fun executeParagraph(@RequestParam paragraphId: Long,
+                         @RequestParam code: String
+    ): Mono<ResponseEntity<String>> {
+        return paragraphExecutionService.executeParagraph(paragraphId, code)
             .map { result -> ResponseEntity.ok(result) }
             .defaultIfEmpty(ResponseEntity.notFound().build())
     }

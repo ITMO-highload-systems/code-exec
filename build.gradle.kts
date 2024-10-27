@@ -23,11 +23,19 @@ val testContainersVersion = "1.20.1"
 val jacksonVersion = "2.17.2"
 val kotlinJetBrainsVersion = "2.0.20"
 val reactorVersion = "3.6.11"
+val postgresqlVersion = "42.7.3"
+val flyWayVersion = "10.10.0"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+    implementation("org.springframework.data:spring-data-jdbc")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
+    implementation("org.flywaydb:flyway-core:$flyWayVersion")
+
+    runtimeOnly("org.postgresql:postgresql:$postgresqlVersion")
+    runtimeOnly("org.flywaydb:flyway-database-postgresql:$flyWayVersion")
 
     // Test dependencies
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -35,7 +43,9 @@ dependencies {
     testImplementation("org.testcontainers:testcontainers:$testContainersVersion")
     testImplementation("org.testcontainers:junit-jupiter:$testContainersVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:$kotlinJetBrainsVersion")
+    testImplementation("org.testcontainers:postgresql:$testContainersVersion")
     testImplementation("io.projectreactor:reactor-test:$reactorVersion")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 kotlin {

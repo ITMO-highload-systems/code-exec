@@ -4,5 +4,5 @@ import reactor.core.publisher.Mono
 
 interface ParagraphExecutionService {
 
-    fun executeParagraph(code: String): Mono<String>
+    fun executeParagraph(paragraphId: Long, code: String): Mono<String>
 }
