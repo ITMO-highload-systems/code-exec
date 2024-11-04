@@ -25,12 +25,14 @@ val kotlinJetBrainsVersion = "2.0.20"
 val reactorVersion = "3.6.11"
 val postgresqlVersion = "42.7.3"
 val flyWayVersion = "10.10.0"
+val cloudConfigVersion = "4.1.3"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.springframework.data:spring-data-jdbc")
+    implementation("org.springframework.cloud:spring-cloud-starter-config:$cloudConfigVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     implementation("org.flywaydb:flyway-core:$flyWayVersion")
 
