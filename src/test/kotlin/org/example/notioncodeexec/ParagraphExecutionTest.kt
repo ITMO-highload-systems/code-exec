@@ -1,15 +1,20 @@
 package org.example.notioncodeexec
 
+import org.example.notioncodeexec.config.JwtUtil
 import org.example.notioncodeexec.repository.ExecutionCodeResultRepository
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpHeaders.AUTHORIZATION
 
 class ParagraphExecutionTest : AbstractIntegrationTest() {
 
     @Autowired
     lateinit var executionCodeRepository: ExecutionCodeResultRepository
+
+    @Autowired
+    lateinit var jwtUtil: JwtUtil
 
     private val paragraphId = 1L
 
@@ -23,6 +28,7 @@ class ParagraphExecutionTest : AbstractIntegrationTest() {
     fun `executeParagraph - simple code - correct answer`() {
         webTestClient.get()
             .uri("/api/v1/execution/execute?paragraphId=$paragraphId&code=print('Hello, World!')")
+            .header(AUTHORIZATION, "Bearer " + jwtUtil.generateServerToken())
             .exchange()
             .expectStatus().isOk
             .expectBody(String::class.java)
@@ -40,6 +46,7 @@ class ParagraphExecutionTest : AbstractIntegrationTest() {
     fun `executeParagraph - incorrect code - correct answer with syntax error`() {
         webTestClient.get()
             .uri("/api/v1/execution/execute?paragraphId=$paragraphId&code=print('Hello, World!'")
+            .header(AUTHORIZATION, "Bearer " + jwtUtil.generateServerToken())
             .exchange()
             .expectStatus().isOk
             .expectBody(String::class.java)
