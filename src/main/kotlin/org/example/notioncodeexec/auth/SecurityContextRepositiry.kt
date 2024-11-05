@@ -1,4 +1,4 @@
-package org.example.notioncodeexec.config
+package org.example.notioncodeexec.auth
 
 
 import org.springframework.http.HttpHeaders

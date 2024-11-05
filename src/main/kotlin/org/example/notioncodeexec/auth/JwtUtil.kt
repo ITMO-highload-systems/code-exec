@@ -1,4 +1,4 @@
-package org.example.notioncodeexec.config
+package org.example.notioncodeexec.auth
 
 
 import io.jsonwebtoken.Jwts
@@ -27,13 +27,6 @@ class JwtUtil {
     @Value("\${spring.application.name}")
     private val serverName: String = "NOTION-EXEC"
 
-    fun generateToken(
-        extraClaims: Map<String?, Any?>,
-        userDetails: UserDetails
-    ): String {
-        return buildToken(extraClaims, userDetails, jwtExpiration)
-    }
-
     fun generateServerToken(
     ): String {
         return buildToken(
@@ -53,23 +46,6 @@ class JwtUtil {
             },
             jwtServerExpiration
         )
-    }
-
-    fun generateToken(): String {
-        return generateToken(mapOf(), object : UserDetails {
-            override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-                return mutableListOf()
-            }
-
-            override fun getPassword(): String {
-                return "password"
-            }
-
-            override fun getUsername(): String {
-                return UUID.randomUUID().toString()
-            }
-
-        })
     }
 
     private fun buildToken(

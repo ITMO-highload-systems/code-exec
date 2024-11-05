@@ -1,6 +1,8 @@
 package org.example.notioncodeexec.config
 
 
+import org.example.notioncodeexec.auth.JWTAuthenticationManager
+import org.example.notioncodeexec.auth.SecurityContextRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
@@ -20,6 +22,7 @@ class SecurityConfig(
             .csrf { csrf -> csrf.disable() }
             .authenticationManager(jwtAuthenticationManager)
             .authorizeExchange { auth ->
+                auth.pathMatchers("/actuator/**").permitAll()
                 auth.anyExchange().authenticated()
             }
             .securityContextRepository(securityContextRepository)

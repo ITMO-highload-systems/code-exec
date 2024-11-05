@@ -11,17 +11,25 @@ spring:
     enabled: true
     baseline-on-migrate: true
 
-docker:
-  image: "python-container"
 server:
   port: 0
+
 application:
+  docker:
+    image: "python-container"
   security:
     jwt:
       expiration: 123456789
       server-expiration: 123456789009876
       secret-key: MegaLargeSigningSecretKeyForDemoApplicationMegaLargeSigningSecretKeyForDemoApplication
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

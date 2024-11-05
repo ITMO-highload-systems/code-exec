@@ -1,6 +1,6 @@
 package org.example.notioncodeexec
 
-import org.example.notioncodeexec.config.JwtUtil
+import org.example.notioncodeexec.auth.JwtUtil
 import org.example.notioncodeexec.repository.ExecutionCodeResultRepository
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
