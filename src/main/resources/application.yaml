@@ -1,6 +1,38 @@
 spring:
   application:
     name: notion-code-exec
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+server:
+  port: 0
+
+application:
+  docker:
+    image: "python-container"
+  security:
+    jwt:
+      expiration: 123456789
+      server-expiration: 123456789009876
+      secret-key: MegaLargeSigningSecretKeyForDemoApplicationMegaLargeSigningSecretKeyForDemoApplication
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
   config:
     activate:
       on-profile: dev
