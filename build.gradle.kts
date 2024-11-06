@@ -29,6 +29,7 @@ val jjwtApiVersion = "0.11.2"
 val jjwtImplVersion = "0.11.5"
 val jjwtJacksonVersion = "0.11.1"
 val springDataJdbc = "3.3.5"
+val cloudConfigVersion = "4.1.3"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -38,6 +39,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.data:spring-data-jdbc:$springDataJdbc")
+    implementation("org.springframework.cloud:spring-cloud-starter-config:$cloudConfigVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     implementation("org.flywaydb:flyway-core:$flyWayVersion")
     implementation("io.jsonwebtoken:jjwt-api:$jjwtApiVersion")
