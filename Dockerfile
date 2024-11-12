@@ -1,6 +1,8 @@
 # Используем базовый образ с JDK 21
 FROM openjdk:21-jdk-slim
 
+RUN apt-get update && apt-get install -y docker.io && apt-get clean
+
 WORKDIR /app
 
 # Копируем сгенерированный jar файл
