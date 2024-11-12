@@ -7,7 +7,7 @@ WORKDIR /app
 COPY build/libs/notion-code-exec-0.0.1-SNAPSHOT.jar app.jar
 
 # Устанавливаем права на файл, если нужно
-RUN chmod +x /app/app.jar
+RUN chmod +x /app/app.jar && apt-get update && apt-get install -y docker.io
 
 # Запуск приложения
 ENTRYPOINT ["java", "-jar", "app.jar"]
