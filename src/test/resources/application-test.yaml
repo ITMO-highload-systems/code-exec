@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: notion-code-exec
+  config:
+    import: ""
+  datasource:
+    url: ${NOTION_CODE_DATABASE_URL:jdbc:postgresql://localhost:5432/notion-code-exec}
+    username: ${NOTION_CODE_DATABASE_USERNAME:postgres}
+    password: ${NOTION_CODE_DATABASE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+  cloud:
+    config:
+      enabled: false
+      fail-fast: false
+
+server:
+  port: 0
+
+application:
+  docker:
+    image: "python-container"
+  security:
+    jwt:
+      expiration: 123456789
+      server-expiration: 123456789009876
+      secret-key: MegaLargeSigningSecretKeyForDemoApplicationMegaLargeSigningSecretKeyForDemoApplication
+
+eureka:
+  client:
+    enabled: false
+    service-url:
+      registerWithEureka: false

@@ -13,6 +13,7 @@ import org.testcontainers.utility.DockerImageName
 
 @AutoConfigureMockMvc
 @SpringBootTest
+@ActiveProfiles("test")
 abstract class AbstractIntegrationTest {
 
     @Autowired
