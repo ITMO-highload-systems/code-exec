@@ -10,4 +10,4 @@ COPY build/libs/notion-code-exec-0.0.1-SNAPSHOT.jar app.jar
 RUN chmod +x /app/app.jar && apt-get update && apt-get install -y docker.io
 
 # Запуск приложения
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=prod"]

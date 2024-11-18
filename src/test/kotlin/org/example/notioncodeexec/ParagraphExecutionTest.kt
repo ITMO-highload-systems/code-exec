@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders.AUTHORIZATION
+import org.springframework.test.context.ActiveProfiles
 
+@ActiveProfiles("test")
 class ParagraphExecutionTest : AbstractIntegrationTest() {
 
     @Autowired
