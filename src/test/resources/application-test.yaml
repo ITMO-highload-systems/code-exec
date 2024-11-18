@@ -23,7 +23,7 @@ server:
 
 application:
   docker:
-    image: "python-container"
+    image: "test-python-container"
   security:
     jwt:
       expiration: 123456789

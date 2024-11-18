@@ -25,6 +25,12 @@ jobs:
           java-version: 21
           distribution: corretto  # Выберите вашу JDK (temurin — OpenJDK от Eclipse Foundation)
 
+      # Устанавливаем Docker
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+        with:
+          version: 'latest'
+
       # Кэшируем зависимости Gradle для ускорения сборки
       - name: Cache Gradle dependencies
         uses: actions/cache@v3
