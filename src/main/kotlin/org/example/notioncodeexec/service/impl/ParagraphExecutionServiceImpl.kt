@@ -1,6 +1,7 @@
 package org.example.notioncodeexec.service.impl
 
 import org.example.notioncodeexec.config.DockerConfig
+import org.example.notioncodeexec.dto.ExecuteParagraphRequest
 import org.example.notioncodeexec.model.ExecutionCodeResult
 import org.example.notioncodeexec.service.ExecutionResultService
 import org.example.notioncodeexec.service.ParagraphExecutionService
@@ -23,18 +24,29 @@ class ParagraphExecutionServiceImpl(
         private const val EXECUTING_CODE_INFO = "Executing code: %s"
     }
 
-    override fun executeParagraph(paragraphId: Long, code: String): Mono<String> {
+    override fun executeParagraph(executionParagraphRequest: ExecuteParagraphRequest): Mono<Void> {
         return Mono.fromCallable {
             try {
-                logger.info(EXECUTING_CODE_INFO.format(code))
-                val processBuilder = ProcessBuilder("docker", "exec", dockerConfig.image, "python3", "-c", code)
+                logger.info(EXECUTING_CODE_INFO.format(executionParagraphRequest.code))
+                val processBuilder = ProcessBuilder(
+                    "docker", "exec", dockerConfig.image,
+                    "python3", "-c", executionParagraphRequest.code
+                )
                 processBuilder.redirectErrorStream(true)
 
                 val process = processBuilder.start()
                 val reader = BufferedReader(InputStreamReader(process.inputStream))
                 val output = reader.readText()
                 process.waitFor()
-                executionResultService.saveExecutionResult(ExecutionCodeResult(paragraphId, output))
+
+                // Сохранение результата выполнения
+                executionResultService.saveExecutionResult(
+                    ExecutionCodeResult(executionParagraphRequest.paragraphid, output)
+                )
+
+                // Вызов функции отправки уведомления
+                sendResponse(executionParagraphRequest.paragraphid, output)
+
                 output
             } catch (ex: Exception) {
                 logger.error(CODE_EXECUTION_ERROR.format(ex.message))
@@ -43,5 +55,10 @@ class ParagraphExecutionServiceImpl(
         }
             .subscribeOn(Schedulers.boundedElastic())
             .doOnError { e -> logger.error(CODE_EXECUTION_ERROR.format(e.message)) }
+            .then()
+    }
+
+    fun sendResponse(paragraphId: Long, output: String) {
+        // TODO реализовать функцию которая бы уведомляла о том, что параграф исполнен
     }
 }
