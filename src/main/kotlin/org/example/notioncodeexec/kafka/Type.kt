@@ -1,4 +1,4 @@
-package org.example.notion.kafka
+package org.example.notioncodeexec.kafka
 
 enum class Type {
     PARAGRAPH_EXECUTED

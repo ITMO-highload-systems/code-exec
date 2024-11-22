@@ -1,10 +1,10 @@
 package org.example.notioncodeexec.service.impl
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.example.notion.kafka.Message
-import org.example.notion.kafka.Type
 import org.example.notioncodeexec.config.DockerConfig
 import org.example.notioncodeexec.dto.ExecuteParagraphRequest
+import org.example.notioncodeexec.kafka.Message
+import org.example.notioncodeexec.kafka.Type
 import org.example.notioncodeexec.model.ExecutionCodeResult
 import org.example.notioncodeexec.service.ExecutionResultService
 import org.example.notioncodeexec.service.ParagraphExecutionService

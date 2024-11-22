@@ -1,4 +1,4 @@
-package org.example.notion.kafka
+package org.example.notioncodeexec.kafka
 
 data class Message(
     override val type: Type,
