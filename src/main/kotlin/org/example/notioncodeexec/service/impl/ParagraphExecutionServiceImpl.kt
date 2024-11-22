@@ -1,11 +1,15 @@
 package org.example.notioncodeexec.service.impl
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import org.example.notion.kafka.Message
+import org.example.notion.kafka.Type
 import org.example.notioncodeexec.config.DockerConfig
 import org.example.notioncodeexec.dto.ExecuteParagraphRequest
 import org.example.notioncodeexec.model.ExecutionCodeResult
 import org.example.notioncodeexec.service.ExecutionResultService
 import org.example.notioncodeexec.service.ParagraphExecutionService
 import org.slf4j.LoggerFactory
+import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 import reactor.core.scheduler.Schedulers
@@ -15,7 +19,9 @@ import java.io.InputStreamReader
 @Service
 class ParagraphExecutionServiceImpl(
     val dockerConfig: DockerConfig,
-    val executionResultService: ExecutionResultService
+    val executionResultService: ExecutionResultService,
+    private val kafkaTemplate: KafkaTemplate<String, String>,
+    private val objectMapper: ObjectMapper
 ): ParagraphExecutionService {
 
     companion object {
@@ -44,10 +50,15 @@ class ParagraphExecutionServiceImpl(
                     ExecutionCodeResult(executionParagraphRequest.paragraphid, output)
                 )
 
-                // Вызов функции отправки уведомления
-                sendResponse(executionParagraphRequest.paragraphid, output)
-
-                output
+                // todo fix note id Вызов функции отправки уведомления
+                sendResponse(
+                    Message(
+                        Type.PARAGRAPH_EXECUTED,
+                        output,
+                        1L,
+                        executionParagraphRequest.paragraphid
+                    )
+                )
             } catch (ex: Exception) {
                 logger.error(CODE_EXECUTION_ERROR.format(ex.message))
                 CODE_EXECUTION_ERROR.format(ex.message)
@@ -58,7 +69,21 @@ class ParagraphExecutionServiceImpl(
             .then()
     }
 
-    fun sendResponse(paragraphId: Long, output: String) {
-        // TODO реализовать функцию которая бы уведомляла о том, что параграф исполнен
+    fun sendResponse(payload: Message) {
+        val send = kafkaTemplate.send(
+            "events",
+            objectMapper.writeValueAsString(payload)
+        )
+        send.whenComplete { result, ex ->
+            if (ex == null) {
+                logger.info(
+                    "Sent message=[$payload] with offset=[${result.recordMetadata.offset()})]"
+                )
+            } else {
+                logger.error(
+                    "Unable to send message=[$payload] due to :  ${ex.message}"
+                )
+            }
+        }
     }
 }
