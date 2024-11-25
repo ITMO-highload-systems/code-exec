@@ -17,7 +17,7 @@ class ParagraphExecutionController(
     }
 
     @MessageMapping("/paragraph.execute")
-    fun sendMessage(
+    fun executeCode(
         @Payload request: ExecuteParagraphRequest
     ) {
         logger.info("Received message: $request")
