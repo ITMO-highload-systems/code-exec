@@ -19,7 +19,7 @@ spring:
       fail-fast: false
 
 server:
-  port: 0
+  port: 7878
 
 application:
   docker:

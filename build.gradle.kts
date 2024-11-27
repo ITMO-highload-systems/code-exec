@@ -30,19 +30,23 @@ val jjwtImplVersion = "0.11.5"
 val jjwtJacksonVersion = "0.11.1"
 val springDataJdbc = "3.3.5"
 val cloudConfigVersion = "4.1.3"
+val webmvcUiVersion = "2.0.4"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-websocket")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+    implementation("org.springframework.kafka:spring-kafka")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
-    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.data:spring-data-jdbc:$springDataJdbc")
     implementation("org.springframework.cloud:spring-cloud-starter-config:$cloudConfigVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     implementation("org.flywaydb:flyway-core:$flyWayVersion")
     implementation("io.jsonwebtoken:jjwt-api:$jjwtApiVersion")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:$webmvcUiVersion")
+
 
     runtimeOnly("io.jsonwebtoken:jjwt-impl:$jjwtImplVersion")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jjwtJacksonVersion")
