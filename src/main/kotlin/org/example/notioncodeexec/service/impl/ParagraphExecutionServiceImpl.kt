@@ -50,12 +50,11 @@ class ParagraphExecutionServiceImpl(
                     ExecutionCodeResult(executionParagraphRequest.paragraphid, output)
                 )
 
-                // todo fix note id Вызов функции отправки уведомления
                 sendResponse(
                     Message(
                         Type.PARAGRAPH_EXECUTED,
                         output,
-                        1L,
+                        executionParagraphRequest.noteId,
                         executionParagraphRequest.paragraphid
                     )
                 )
